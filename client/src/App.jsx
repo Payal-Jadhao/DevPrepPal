@@ -80,14 +80,10 @@ import StCN from "./pages/students/StCN";
 import StOOPS from "./pages/students/StOOPS";
 import StHome from "./pages/students/StHome";
 import Interview from "./pages/Interview";
-
 function AppWrapper() {
-  const location = useLocation();
-  const hideNavbar = location.pathname.startsWith("/students");
-
   return (
     <>
-      {!hideNavbar && <Navbar />}
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Auth mode="login" />} />
