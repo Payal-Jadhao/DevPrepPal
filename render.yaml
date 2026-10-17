@@ -11,8 +11,7 @@ services:
         value: mongodb+srv://sskhandekar2026:alexerror404@interviewbro.kufflpt.mongodb.net/test?retryWrites=true&w=majority&appName=InterviewBRO
       - key: JWT_SECRET
         value: 81a1b12a9ddb747a9129b104cad5db83c1d5ab53d7db4040355593439d068d73
-      - key: OPENAI_KEY
-        value: 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
-      - key: GROQ_API_URL
-        value: https://api.groq.com/openai/v1/chat/completions
-
+      - key: GEMINI_API_KEY
+        value: AIzaSyAEtxPPsE2zTLVmkfdGYdia2nIQVBOHz1w
+      - key: GEMINI_MODEL
+        value: gemini-1.5-flash
