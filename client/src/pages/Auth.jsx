@@ -69,11 +69,7 @@ export default function Auth() {
       if (email) localStorage.setItem("email", email);
       localStorage.setItem("isLoggedIn", "true"); // Set login flag
       setError("");
-      if (mode === "login") {
-        navigate("/students/"); // Redirect to /students/ after login
-      } else {
-        navigate("/");
-      }
+      navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "Authentication failed.");
     }
