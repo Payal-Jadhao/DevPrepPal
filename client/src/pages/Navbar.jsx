@@ -1,424 +1,43 @@
-// // import React, { useState, useEffect } from "react";
-// // import { Link, useLocation } from "react-router-dom";
-// // // import { MenuIcon, XIcon } from "@heroicons/react/outline";
-// // // Correct import for v2
-// // import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-
-// // const navLinks = [
-// //   { name: "Home", href: "/", type: "scroll" },
-// //   { name: "Study Material", href: "/studymaterial", type: "route" },
-// //   { name: "Strategy", href: "/strategy", type: "route" },
-// //   { name: "Take Interview", href: "/interview", type: "route" },
-// // ];
-
-// // export default function Navbar() {
-// //   const [menuOpen, setMenuOpen] = useState(false);
-// //   const [isDark, setIsDark] = useState(() => {
-// //     if (typeof window !== 'undefined') {
-// //       return localStorage.getItem('theme') === 'dark' || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-// //     }
-// //     return false;
-// //   });
-// //   const location = useLocation();
-
-// //   useEffect(() => {
-// //     const html = document.documentElement;
-// //     if (isDark) {
-// //       html.classList.add('dark');
-// //       localStorage.setItem('theme', 'dark');
-// //     } else {
-// //       html.classList.remove('dark');
-// //       localStorage.setItem('theme', 'light');
-// //     }
-// //   }, [isDark]);
-
-// //   const handleDarkToggle = () => setIsDark((d) => !d);
-
-// //   const handleScroll = (e, href) => {
-// //     if (href.startsWith("#")) {
-// //       e.preventDefault();
-// //       const el = document.getElementById(href.slice(1));
-// //       if (el) {
-// //         el.scrollIntoView({ behavior: "smooth" });
-// //         setMenuOpen(false);
-// //       }
-// //     }
-// //   };
-
-// //   return (
-// //     <nav className="fixed top-0 left-0 w-full bg-white dark:bg-gray-900 shadow-md dark:shadow-lg z-50 transition-colors duration-300">
-// //       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-// //         {/* Logo/Site Name */}
-// //         <Link to="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">
-// //         DevPrepPal 
-// //         </Link>
-// //         {/* Desktop Nav */}
-// //         <div className="hidden md:flex items-center space-x-2">
-// //           {navLinks.map(link =>
-// //             link.type === "scroll" ? (
-// //               <a
-// //                 key={link.name}
-// //                 href={link.href}
-// //                 onClick={e => handleScroll(e, link.href)}
-// //                 className={`px-4 py-2 text-gray-700 dark:text-gray-200 font-medium hover:text-blue-600 dark:hover:text-blue-400 hover:underline hover:underline-offset-4 hover:scale-105 transition duration-200 cursor-pointer ${location.hash === link.href ? "underline underline-offset-4 text-blue-600 dark:text-blue-400 font-bold" : ""}`}
-// //               >
-// //                 {link.name}
-// //               </a>
-// //             ) : (
-// //               <Link
-// //                 key={link.name}
-// //                 to={link.href}
-// //                 className={`px-4 py-2 text-gray-700 dark:text-gray-200 font-medium hover:text-blue-600 dark:hover:text-blue-400 hover:underline hover:underline-offset-4 hover:scale-105 transition duration-200 ${location.pathname === link.href ? "underline underline-offset-4 text-blue-600 dark:text-blue-400 font-bold" : ""}`}
-// //               >
-// //                 {link.name}
-// //               </Link>
-// //             )
-// //           )}
-// //           <Link
-// //             to="/auth"
-// //             className="ml-4 px-5 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-full shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition"
-// //           >
-// //             Login / Signup
-// //           </Link>
-// //           {/* Dark mode toggle */}
-// //           <button
-// //             onClick={handleDarkToggle}
-// //             className="ml-4 px-3 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-// //             aria-label="Toggle dark mode"
-// //             title="Toggle dark mode"
-// //           >
-// //             {isDark ? '🌙' : '☀️'}
-// //           </button>
-// //         </div>
-// //         {/* Mobile Hamburger */}
-// //         <button
-// //           className="md:hidden flex items-center justify-center p-2 rounded focus:outline-none"
-// //           onClick={() => setMenuOpen(m => !m)}
-// //           aria-label="Toggle menu"
-// //         >
-// //           {menuOpen ? (
-// //             <XMarkIcon className="h-7 w-7 text-gray-700 dark:text-gray-200" />
-// //           ) : (
-// //             <Bars3Icon className="h-6 w-6 text-gray-700 dark:text-gray-200" />
-// //           )}
-// //         </button>
-// //       </div>
-// //       {/* Mobile Menu */}
-// //       {menuOpen && (
-// //         <div className="md:hidden bg-white dark:bg-gray-900 shadow-md dark:shadow-lg border-t border-gray-100 dark:border-gray-800 px-4 py-4 space-y-2 animate-fade-in transition-colors duration-300">
-// //           {navLinks.map(link =>
-// //             link.type === "scroll" ? (
-// //               <a
-// //                 key={link.name}
-// //                 href={link.href}
-// //                 onClick={e => handleScroll(e, link.href)}
-// //                 className="block px-4 py-2 text-gray-700 dark:text-gray-200 font-medium hover:text-blue-600 dark:hover:text-blue-400 hover:underline hover:underline-offset-4 hover:scale-105 transition duration-200 cursor-pointer"
-// //               >
-// //                 {link.name}
-// //               </a>
-// //             ) : (
-// //               <Link
-// //                 key={link.name}
-// //                 to={link.href}
-// //                 onClick={() => setMenuOpen(false)}
-// //                 className="block px-4 py-2 text-gray-700 dark:text-gray-200 font-medium hover:text-blue-600 dark:hover:text-blue-400 hover:underline hover:underline-offset-4 hover:scale-105 transition duration-200"
-// //               >
-// //                 {link.name}
-// //               </Link>
-// //             )
-// //           )}
-// //           <Link
-// //             to="/auth"
-// //             onClick={() => setMenuOpen(false)}
-// //             className="block mt-2 px-5 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-full shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition"
-// //           >
-// //             Login / Signup
-// //           </Link>
-// //           {/* Dark mode toggle in mobile menu */}
-// //           <button
-// //             onClick={handleDarkToggle}
-// //             className="mt-4 w-full px-3 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-// //             aria-label="Toggle dark mode"
-// //             title="Toggle dark mode"
-// //           >
-// //             {isDark ? '🌙 Dark' : '☀️ Light'}
-// //           </button>
-// //         </div>
-// //       )}
-// //     </nav>
-// //   );
-// // } 
-// import React, { useState, useEffect, useRef } from "react";
-// import { Link, useLocation, useNavigate } from "react-router-dom";
-// import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-
-// const navLinks = [
-//   { name: "Home", href: "/", type: "scroll" },
-//   { name: "Study Material", href: "/studymaterial", type: "route" },
-//   { name: "Strategy", href: "/strategy", type: "route" },
-//   { name: "Take Interview", href: "/interview", type: "route" },
-// ];
-
-// export default function Navbar() {
-//   const [menuOpen, setMenuOpen] = useState(false);
-//   const [dropdownOpen, setDropdownOpen] = useState(false);
-//   const dropdownRef = useRef(null);
-  
-//   const [isDark, setIsDark] = useState(() => {
-//     if (typeof window !== 'undefined') {
-//       return localStorage.getItem('theme') === 'dark' || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-//     }
-//     return false;
-//   });
-  
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const [username, setUsername] = useState("");
-
-//   useEffect(() => {
-//     const storedUsername = localStorage.getItem("username");
-//     const loggedIn = localStorage.getItem("isLoggedIn");
-    
-//     if (loggedIn === "true" && storedUsername) {
-//       setUsername(storedUsername);
-//     } else {
-//       setUsername("");
-//     }
-//   }, [location]);
-
-//   useEffect(() => {
-//     const handleClickOutside = (event) => {
-//       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-//         setDropdownOpen(false);
-//       }
-//     };
-//     document.addEventListener("mousedown", handleClickOutside);
-//     return () => document.removeEventListener("mousedown", handleClickOutside);
-//   }, []);
-
-//   useEffect(() => {
-//     const html = document.documentElement;
-//     if (isDark) {
-//       html.classList.add('dark');
-//       localStorage.setItem('theme', 'dark');
-//     } else {
-//       html.classList.remove('dark');
-//       localStorage.setItem('theme', 'light');
-//     }
-//   }, [isDark]);
-
-//   const handleDarkToggle = () => setIsDark((d) => !d);
-
-//   const handleLogout = () => {
-//     localStorage.removeItem("username");
-//     localStorage.removeItem("email");
-//     localStorage.setItem("isLoggedIn", "false");
-//     setUsername("");
-//     setMenuOpen(false);
-//     setDropdownOpen(false);
-//     navigate("/");
-//   };
-
-//   const handleScroll = (e, href) => {
-//     if (href.startsWith("#")) {
-//       e.preventDefault();
-//       const el = document.getElementById(href.slice(1));
-//       if (el) {
-//         el.scrollIntoView({ behavior: "smooth" });
-//         setMenuOpen(false);
-//       }
-//     }
-//   };
-
-//   const isLinkActive = (link) => {
-//     if (link.type === "scroll") {
-//       return location.pathname === "/" && (location.hash === link.href || (!location.hash && link.href === "/"));
-//     }
-//     return location.pathname.startsWith(link.href);
-//   };
-
-//   return (
-//     <nav className="fixed top-0 left-0 w-full bg-white dark:bg-gray-900 shadow-md dark:shadow-lg z-50 transition-colors duration-300">
-//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-//         <Link to="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">
-//           DevPrepPal 
-//         </Link>
-
-//         <div className="hidden md:flex items-center space-x-2">
-//           {navLinks.map(link => {
-//             const active = isLinkActive(link);
-//             return link.type === "scroll" ? (
-//               <a
-//                 key={link.name}
-//                 href={link.href}
-//                 onClick={e => handleScroll(e, link.href)}
-//                 className={`px-4 py-2 font-medium hover:text-blue-600 dark:hover:text-blue-400 hover:underline hover:underline-offset-4 hover:scale-105 transition duration-200 cursor-pointer ${
-//                   active 
-//                     ? "underline underline-offset-4 text-blue-600 dark:text-blue-400 font-bold" 
-//                     : "text-gray-700 dark:text-gray-200"
-//                 }`}
-//               >
-//                 {link.name}
-//               </a>
-//             ) : (
-//               <Link
-//                 key={link.name}
-//                 to={link.href}
-//                 className={`px-4 py-2 font-medium hover:text-blue-600 dark:hover:text-blue-400 hover:underline hover:underline-offset-4 hover:scale-105 transition duration-200 ${
-//                   active 
-//                     ? "underline underline-offset-4 text-blue-600 dark:text-blue-400 font-bold" 
-//                     : "text-gray-700 dark:text-gray-200"
-//                 }`}
-//               >
-//                 {link.name}
-//               </Link>
-//             );
-//           })}
-
-//           {username ? (
-//             <div className="relative ml-4" ref={dropdownRef}>
-//               <button
-//                 onClick={() => setDropdownOpen(!dropdownOpen)}
-//                 className="flex items-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-medium rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-//               >
-//                 <span>{username}</span>
-//                 <span className="text-xs">▼</span>
-//               </button>
-              
-//               {dropdownOpen && (
-//                 <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 border border-gray-100 dark:border-gray-700 z-50">
-//                   <button
-//                     onClick={handleLogout}
-//                     className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
-//                   >
-//                     Logout
-//                   </button>
-//                 </div>
-//               )}
-//             </div>
-//           ) : (
-//             <Link
-//               to="/auth"
-//               className="ml-4 px-5 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-full shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition"
-//             >
-//               Login / Signup
-//             </Link>
-//           )}
-
-//           <button
-//             onClick={handleDarkToggle}
-//             className="ml-4 px-3 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-//             aria-label="Toggle dark mode"
-//             title="Toggle dark mode"
-//           >
-//             {isDark ? '🌙' : '☀️'}
-//           </button>
-//         </div>
-
-//         <button
-//           className="md:hidden flex items-center justify-center p-2 rounded focus:outline-none"
-//           onClick={() => setMenuOpen(m => !m)}
-//           aria-label="Toggle menu"
-//         >
-//           {menuOpen ? (
-//             <XMarkIcon className="h-7 w-7 text-gray-700 dark:text-gray-200" />
-//           ) : (
-//             <Bars3Icon className="h-6 w-6 text-gray-700 dark:text-gray-200" />
-//           )}
-//         </button>
-//       </div>
-
-//       {menuOpen && (
-//         <div className="md:hidden bg-white dark:bg-gray-900 shadow-md dark:shadow-lg border-t border-gray-100 dark:border-gray-800 px-4 py-4 space-y-2 transition-colors duration-300">
-//           {navLinks.map(link => {
-//             const active = isLinkActive(link);
-//             return link.type === "scroll" ? (
-//               <a
-//                 key={link.name}
-//                 href={link.href}
-//                 onClick={e => handleScroll(e, link.href)}
-//                 className={`block px-4 py-2 font-medium hover:text-blue-600 dark:hover:text-blue-400 hover:underline hover:underline-offset-4 hover:scale-105 transition duration-200 cursor-pointer ${
-//                   active ? "text-blue-600 dark:text-blue-400 font-bold underline underline-offset-4" : "text-gray-700 dark:text-gray-200"
-//                 }`}
-//               >
-//                 {link.name}
-//               </a>
-//             ) : (
-//               <Link
-//                 key={link.name}
-//                 to={link.href}
-//                 onClick={() => setMenuOpen(false)}
-//                 className={`block px-4 py-2 font-medium hover:text-blue-600 dark:hover:text-blue-400 hover:underline hover:underline-offset-4 hover:scale-105 transition duration-200 ${
-//                   active ? "text-blue-600 dark:text-blue-400 font-bold underline underline-offset-4" : "text-gray-700 dark:text-gray-200"
-//                 }`}
-//               >
-//                 {link.name}
-//               </Link>
-//             );
-//           })}
-
-//           {username ? (
-//             <div className="pt-2 border-t border-gray-100 dark:border-gray-800">
-//               <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400">
-//                 Logged in as: <strong className="text-gray-800 dark:text-gray-200">{username}</strong>
-//               </div>
-//               <button
-//                 onClick={handleLogout}
-//                 className="block w-full text-center mt-1 px-5 py-2 bg-red-600 dark:bg-red-500 text-white rounded-full shadow hover:bg-red-700 dark:hover:bg-red-600 transition"
-//               >
-//                 Logout
-//               </button>
-//             </div>
-//           ) : (
-//             <Link
-//               to="/auth"
-//               onClick={() => setMenuOpen(false)}
-//               className="block text-center mt-2 px-5 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-full shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition"
-//             >
-//               Login / Signup
-//             </Link>
-//           )}
-
-//           <button
-//             onClick={handleDarkToggle}
-//             className="mt-4 w-full px-3 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-//             aria-label="Toggle dark mode"
-//             title="Toggle dark mode"
-//           >
-//             {isDark ? '🌙 Dark' : '☀️ Light'}
-//           </button>
-//         </div>
-//       )}
-//     </nav>
-//   );
-// }
-
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { 
+  Bars3Icon, 
+  XMarkIcon,
+  HomeIcon,
+  BookOpenIcon,
+  LightBulbIcon,
+  ChatBubbleBottomCenterTextIcon,
+  ArrowRightOnRectangleIcon,
+  UserCircleIcon,
+  SunIcon,
+  MoonIcon
+} from '@heroicons/react/24/outline';
 
 const navLinks = [
-  { name: "Home", href: "/", type: "scroll" },
-  { name: "Study Material", href: "/studymaterial", type: "route" },
-  { name: "Strategy", href: "/strategy", type: "route" },
-  { name: "Take Interview", href: "/interview", type: "route" },
+  { name: "Home", href: "/", type: "scroll", icon: HomeIcon },
+  { name: "Study Material", href: "/studymaterial", type: "route", icon: BookOpenIcon },
+  { name: "Strategy", href: "/strategy", type: "route", icon: LightBulbIcon },
+  { name: "Take Interview", href: "/interview", type: "route", icon: ChatBubbleBottomCenterTextIcon },
 ];
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const mobileMenuRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
 
   const [isDark, setIsDark] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') === 'dark' || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      return localStorage.getItem('theme') === 'dark' || 
+        (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
     }
     return false;
   });
 
+  // Sync theme
   useEffect(() => {
     const theme = localStorage.getItem('theme');
     if (theme === 'dark') {
@@ -427,27 +46,6 @@ export default function Navbar() {
       setIsDark(false);
     }
   }, [location]);
-
-  useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    const loggedIn = localStorage.getItem("isLoggedIn");
-    
-    if (loggedIn === "true" && storedUsername) {
-      setUsername(storedUsername);
-    } else {
-      setUsername("");
-    }
-  }, [location]);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -459,6 +57,58 @@ export default function Navbar() {
       localStorage.setItem('theme', 'light');
     }
   }, [isDark]);
+
+  // Sync user state
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    
+    if (loggedIn === "true" && storedUsername) {
+      setUsername(storedUsername);
+    } else {
+      setUsername("");
+    }
+  }, [location]);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMenuOpen(false);
+    setDropdownOpen(false);
+  }, [location.pathname, location.hash]);
+
+  // Close dropdown / mobile menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+      if (
+        menuOpen && 
+        mobileMenuRef.current && 
+        !mobileMenuRef.current.contains(event.target) &&
+        !event.target.closest('#mobile-hamburger-btn')
+      ) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [menuOpen]);
+
+  // Close mobile menu when screen resized to desktop (>= 1024px)
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setMenuOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleDarkToggle = () => setIsDark((d) => !d);
 
@@ -478,9 +128,9 @@ export default function Navbar() {
       const el = document.getElementById(href.slice(1));
       if (el) {
         el.scrollIntoView({ behavior: "smooth" });
-        setMenuOpen(false);
       }
     }
+    setMenuOpen(false);
   };
 
   const isLinkActive = (link) => {
@@ -491,155 +141,209 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white dark:bg-gray-900 shadow-md dark:shadow-lg z-50 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-        <Link to="/" className="flex items-center text-2xl font-bold text-blue-600 dark:text-blue-400 tracking-tight">
-          DevPrepPal 
-        </Link>
+    <nav className="fixed top-0 left-0 w-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-md dark:shadow-gray-950/40 z-50 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          
+          {/* Logo / Brand */}
+          <Link 
+            to="/" 
+            className="flex items-center gap-2 group transition-transform duration-200 hover:scale-[1.02]"
+            onClick={() => setMenuOpen(false)}
+          >
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-bold text-lg shadow-sm shadow-blue-500/30">
+              DP
+            </div>
+            <span className="text-xl sm:text-2xl font-extrabold bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 dark:from-blue-400 dark:via-indigo-400 dark:to-blue-300 bg-clip-text text-transparent tracking-tight">
+              DevPrepPal
+            </span>
+          </Link>
 
-        <div className="hidden md:flex items-center space-x-2">
-          {navLinks.map(link => {
-            const active = isLinkActive(link);
-            return link.type === "scroll" ? (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={e => handleScroll(e, link.href)}
-                className={`px-4 py-2 font-medium hover:text-blue-600 dark:hover:text-blue-400 hover:underline hover:underline-offset-4 hover:scale-105 transition duration-200 cursor-pointer ${
-                  active 
-                    ? "underline underline-offset-4 text-blue-600 dark:text-blue-400 font-bold" 
-                    : "text-gray-700 dark:text-gray-200"
-                }`}
-              >
-                {link.name}
-              </a>
+          {/* Desktop Navigation (Visible on lg >= 1024px screens) */}
+          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+            {navLinks.map((link) => {
+              const active = isLinkActive(link);
+              const linkClasses = `px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                active
+                  ? "bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 shadow-sm"
+                  : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100/70 dark:hover:bg-gray-800/70"
+              }`;
+
+              return link.type === "scroll" ? (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleScroll(e, link.href)}
+                  className={linkClasses}
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className={linkClasses}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
+
+            {/* Auth / Profile (Desktop) */}
+            {username ? (
+              <div className="relative ml-2" ref={dropdownRef}>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="flex items-center space-x-2 px-3.5 py-1.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-100 font-medium text-sm rounded-full transition border border-gray-200 dark:border-gray-700 shadow-sm"
+                  aria-expanded={dropdownOpen}
+                >
+                  <UserCircleIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <span className="max-w-[120px] truncate">{username}</span>
+                  <span className="text-xs text-gray-400">▼</span>
+                </button>
+                
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl py-1.5 border border-gray-100 dark:border-gray-700 z-50 animate-fadeIn">
+                    <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
+                      Signed in as <p className="font-semibold text-gray-800 dark:text-gray-200 truncate">{username}</p>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition"
+                    >
+                      <ArrowRightOnRectangleIcon className="w-4 h-4 mr-2" />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <Link
-                key={link.name}
-                to={link.href}
-                className={`px-4 py-2 font-medium hover:text-blue-600 dark:hover:text-blue-400 hover:underline hover:underline-offset-4 hover:scale-105 transition duration-200 ${
-                  active 
-                    ? "underline underline-offset-4 text-blue-600 dark:text-blue-400 font-bold" 
-                    : "text-gray-700 dark:text-gray-200"
-                }`}
+                to="/auth"
+                className="ml-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-semibold rounded-lg shadow-sm shadow-blue-500/30 hover:shadow-md hover:shadow-blue-500/40 transition-all duration-200"
               >
-                {link.name}
+                Login / Signup
               </Link>
-            );
-          })}
+            )}
 
-          {username ? (
-            <div className="relative ml-4" ref={dropdownRef}>
-              <button
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center space-x-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-medium rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-              >
-                <span>{username}</span>
-                <span className="text-xs">▼</span>
-              </button>
-              
-              {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 border border-gray-100 dark:border-gray-700 z-50">
-                  <button
-                    onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <Link
-              to="/auth"
-              className="ml-4 px-5 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-full shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition"
+            {/* Dark Mode Toggle (Desktop) */}
+            <button
+              onClick={handleDarkToggle}
+              className="ml-2 p-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+              aria-label="Toggle dark mode"
+              title="Toggle theme"
             >
-              Login / Signup
-            </Link>
-          )}
+              {isDark ? (
+                <SunIcon className="w-5 h-5 text-amber-400" />
+              ) : (
+                <MoonIcon className="w-5 h-5 text-slate-700" />
+              )}
+            </button>
+          </div>
 
-          <button
-            onClick={handleDarkToggle}
-            className="ml-4 px-3 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-            aria-label="Toggle dark mode"
-            title="Toggle dark mode"
-          >
-            {isDark ? '🌙' : '☀️'}
-          </button>
+          {/* Mobile & Tablet Controls (Visible on < 1024px screens) */}
+          <div className="flex lg:hidden items-center gap-2">
+            {/* Quick Dark Mode toggle on Mobile Header */}
+            <button
+              onClick={handleDarkToggle}
+              className="p-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+              aria-label="Toggle theme"
+            >
+              {isDark ? (
+                <SunIcon className="w-5 h-5 text-amber-400" />
+              ) : (
+                <MoonIcon className="w-5 h-5 text-slate-700" />
+              )}
+            </button>
+
+            {/* Hamburger Button */}
+            <button
+              id="mobile-hamburger-btn"
+              className="p-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none transition-colors"
+              onClick={() => setMenuOpen((m) => !m)}
+              aria-label="Toggle mobile menu"
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? (
+                <XMarkIcon className="h-7 w-7 transition-transform duration-200 rotate-90" />
+              ) : (
+                <Bars3Icon className="h-7 w-7 transition-transform duration-200" />
+              )}
+            </button>
+          </div>
+
         </div>
-
-        <button
-          className="md:hidden flex items-center justify-center p-2 rounded focus:outline-none"
-          onClick={() => setMenuOpen(m => !m)}
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? (
-            <XMarkIcon className="h-7 w-7 text-gray-700 dark:text-gray-200" />
-          ) : (
-            <Bars3Icon className="h-6 w-6 text-gray-700 dark:text-gray-200" />
-          )}
-        </button>
       </div>
 
+      {/* Mobile & Tablet Dropdown Navigation Drawer */}
       {menuOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-900 shadow-md dark:shadow-lg border-t border-gray-100 dark:border-gray-800 px-4 py-4 space-y-2 transition-colors duration-300">
-          {navLinks.map(link => {
-            const active = isLinkActive(link);
-            return link.type === "scroll" ? (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={e => handleScroll(e, link.href)}
-                className={`block px-4 py-2 font-medium hover:text-blue-600 dark:hover:text-blue-400 hover:underline hover:underline-offset-4 hover:scale-105 transition duration-200 cursor-pointer ${
-                  active ? "text-blue-600 dark:text-blue-400 font-bold underline underline-offset-4" : "text-gray-700 dark:text-gray-200"
-                }`}
-              >
-                {link.name}
-              </a>
+        <div 
+          ref={mobileMenuRef}
+          className="lg:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-t border-gray-200/80 dark:border-gray-800/80 shadow-2xl px-4 pt-3 pb-6 transition-all duration-300"
+        >
+          <div className="flex flex-col space-y-1.5">
+            {navLinks.map((link) => {
+              const active = isLinkActive(link);
+              const Icon = link.icon;
+              const linkClasses = `flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold transition-all duration-200 ${
+                active 
+                  ? "bg-blue-600 text-white shadow-md shadow-blue-500/20" 
+                  : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/70"
+              }`;
+
+              return link.type === "scroll" ? (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleScroll(e, link.href)}
+                  className={linkClasses}
+                >
+                  <Icon className={`w-5 h-5 ${active ? "text-white" : "text-gray-500 dark:text-gray-400"}`} />
+                  <span>{link.name}</span>
+                </a>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className={linkClasses}
+                >
+                  <Icon className={`w-5 h-5 ${active ? "text-white" : "text-gray-500 dark:text-gray-400"}`} />
+                  <span>{link.name}</span>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* User Account / Auth Section in Mobile Menu */}
+          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
+            {username ? (
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 px-4 py-2 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-200 dark:border-gray-700/60">
+                  <UserCircleIcon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                  <div className="overflow-hidden">
+                    <p className="text-xs text-gray-500 dark:text-gray-400">Logged in as</p>
+                    <p className="font-semibold text-gray-900 dark:text-gray-100 truncate text-sm">{username}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 font-semibold rounded-xl transition border border-red-200 dark:border-red-900/40 text-sm"
+                >
+                  <ArrowRightOnRectangleIcon className="w-5 h-5" />
+                  Logout
+                </button>
+              </div>
             ) : (
               <Link
-                key={link.name}
-                to={link.href}
+                to="/auth"
                 onClick={() => setMenuOpen(false)}
-                className={`block px-4 py-2 font-medium hover:text-blue-600 dark:hover:text-blue-400 hover:underline hover:underline-offset-4 hover:scale-105 transition duration-200 ${
-                  active ? "text-blue-600 dark:text-blue-400 font-bold underline underline-offset-4" : "text-gray-700 dark:text-gray-200"
-                }`}
+                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-md shadow-blue-500/25 transition-all text-base"
               >
-                {link.name}
+                Login / Signup
               </Link>
-            );
-          })}
-
-          {username ? (
-            <div className="pt-2 border-t border-gray-100 dark:border-gray-800">
-              <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400">
-                Logged in as: <strong className="text-gray-800 dark:text-gray-200">{username}</strong>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="block w-full text-center mt-1 px-5 py-2 bg-red-600 dark:bg-red-500 text-white rounded-full shadow hover:bg-red-700 dark:hover:bg-red-600 transition"
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <Link
-              to="/auth"
-              onClick={() => setMenuOpen(false)}
-              className="block text-center mt-2 px-5 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-full shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition"
-            >
-              Login / Signup
-            </Link>
-          )}
-
-          <button
-            onClick={handleDarkToggle}
-            className="mt-4 w-full px-3 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-            aria-label="Toggle dark mode"
-            title="Toggle dark mode"
-          >
-            {isDark ? '🌙 Dark' : '☀️ Light'}
-          </button>
+            )}
+          </div>
         </div>
       )}
     </nav>
