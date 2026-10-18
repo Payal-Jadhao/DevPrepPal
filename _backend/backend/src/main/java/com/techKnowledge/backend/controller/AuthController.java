@@ -82,29 +82,37 @@ public class AuthController {
                 .body(Map.of("message", "All fields are required."));
         }
 
-        Optional<User> userOpt = userRepository.findByUsername(identifier.toLowerCase().trim());
-        if (userOpt.isEmpty()) {
-            userOpt = userRepository.findByEmail(identifier.toLowerCase().trim());
+        try {
+            Optional<User> userOpt = userRepository.findByUsername(identifier.toLowerCase().trim());
+            if (userOpt.isEmpty()) {
+                userOpt = userRepository.findByEmail(identifier.toLowerCase().trim());
+            }
+
+            if (userOpt.isEmpty()) {
+                return ResponseEntity.badRequest()
+                    .body(Map.of("message", "Invalid credentials"));
+            }
+
+            User user = userOpt.get();
+            if (!passwordEncoder.matches(password, user.getPassword())) {
+                return ResponseEntity.badRequest()
+                    .body(Map.of("message", "Invalid credentials"));
+            }
+
+            String token = jwtUtil.generateToken(user.getUsername());
+
+            Map<String, Object> userMap = new HashMap<>();
+            userMap.put("username", user.getUsername());
+            userMap.put("email", user.getEmail());
+
+            return ResponseEntity.ok(Map.of("token", token, "user", userMap));
+        } catch (Exception e) {
+            System.out.println("!!! DATABASE LOGIN CRASHED !!!");
+            System.out.println("Reason for 500 error: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(500)
+                .body(Map.of("message", "Database integration error: " + e.getMessage()));
         }
-
-        if (userOpt.isEmpty()) {
-            return ResponseEntity.badRequest()
-                .body(Map.of("message", "Invalid credentials"));
-        }
-
-        User user = userOpt.get();
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            return ResponseEntity.badRequest()
-                .body(Map.of("message", "Invalid credentials"));
-        }
-
-        String token = jwtUtil.generateToken(user.getUsername());
-
-        Map<String, Object> userMap = new HashMap<>();
-        userMap.put("username", user.getUsername());
-        userMap.put("email", user.getEmail());
-
-        return ResponseEntity.ok(Map.of("token", token, "user", userMap));
     }
 
     @GetMapping("/me")
