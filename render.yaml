@@ -8,7 +8,7 @@ services:
     region: oregon
     envVars:
       - key: MONGO_URI
-        value: mongodb+srv://pdjadhao:pdjadhao@interviewbro.kufflpt.mongodb.net/test?retryWrites=true&w=majority&appName=InterviewBRO
+        sync: false
       - key: JWT_SECRET
         value: 81a1b12a9ddb747a9129b104cad5db83c1d5ab53d7db4040355593439d068d73
       - key: GEMINI_API_KEY
